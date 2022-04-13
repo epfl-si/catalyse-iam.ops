@@ -10,7 +10,7 @@ erm_environments:
       route_name: erm-test-prod  # I suppose we could change this...
       service_name: erm-proxy-prod
       deployment_config_name: erm-proxy-prod
-      hostname: "erm.epfl.ch"
+      hostname: "catalyse-erm.epfl.ch"
   test: 
     - name: test
       route_name: erm-test

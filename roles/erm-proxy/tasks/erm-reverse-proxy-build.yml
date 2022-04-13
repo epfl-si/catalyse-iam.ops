@@ -73,6 +73,20 @@
     and
     ( "ALREADY_LINKED" not in _oc_secrets_link.stdout )
 
+- name: Base ImageStream from Docker Hub
+  # Build in test only (and promote to production):
+  when: >-
+    inventory_environment == "test"
+  openshift_imagestream:
+    metadata:
+      name: httpd
+      namespace: "{{ openshift_namespace }}"
+    from:
+      kind: DockerImage
+      name: "httpd:2.4"
+    tag: "2.4"
+  register: _erm_base_imagestream
+
 - name: Build in OpenShift
   # Build in test only (and promote to production):
   when: >-
@@ -81,6 +95,10 @@
     metadata:
       namespace: "{{ openshift_namespace }}"
       name: "{{ erm_image_name }}"
+    from:
+      kind: ImageStreamTag
+      name: "httpd:2.4"
+      namespace: "{{ openshift_namespace }}"
     git:
       repository: "{{ erm_git_uri }}"
     spec:
@@ -100,6 +118,8 @@
   when:
     - >
       ( (_erm_imagestream | default({})) is changed )
+      or
+      ( (_erm_base_imagestream | default({})) is changed )
       or
       ( (_erm_proxy_build_secret_1 | default({})) is changed )
       or
