@@ -17,8 +17,8 @@ erm_environments:
       service_name: erm-proxy-test
       deployment_config_name: erm-proxy-test
       hostname: "erm-test.epfl.ch"
-    - name: test-proj
-      route_name: erm-test-proj
-      service_name: erm-proxy-test-proj
-      deployment_config_name: erm-proxy-test-proj
-      hostname: "erm-test-proj.epfl.ch"
+    - name: dev
+      route_name: erm-dev
+      service_name: erm-proxy-dev
+      deployment_config_name: erm-proxy-dev
+      hostname: "erm-dev.epfl.ch"
